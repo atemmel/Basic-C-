@@ -5,6 +5,6 @@
 #include <iostream>
 #include <fstream>
 
-bool isSorted(char * fileName);
+bool isSorted(const char * fileName);
 
-#endif;
+#endif

@@ -1,6 +1,6 @@
 #include "sorted.h"
 
-bool isSorted(char * fileName)
+bool isSorted(const char * fileName)
 {
 	std::ifstream file(fileName);
 	int current, previous;

@@ -5,6 +5,6 @@
 #include <iostream>
 #include <fstream>
 
-void merge(char * file1, char * file2, char * result);
+void merge(const char * file1, const char * file2, const char * result);
 
-#endif;
+#endif

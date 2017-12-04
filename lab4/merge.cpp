@@ -1,15 +1,28 @@
 #include "merge.h"
 
-void merge(char * file1, char * file2, char * result)
+void merge(const char * file1, const char * file2, const char * result)
 {
 	std::ifstream fileA(file1), fileB(file2);
 	std::ofstream fileC(result);
 	
 	int a, b, c;
 
-	while (fileA >> a && fileB >> b)
+	fileA >> a;
+	fileB >> b;
+
+	while (!fileA.eof() && !fileB.eof())
 	{
-		a < b ? c = a : c = b;
+		if(a < b)
+		{
+			c = a;
+			fileA >> a;
+		}
+		else
+		{
+			c = b;
+			fileB >> b;
+		}
+		
 		fileC << c << ' ';
 	}
 
