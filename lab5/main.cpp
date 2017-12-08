@@ -11,14 +11,17 @@ int main()
 	std::map<std::string, int> freq;
 	std::vector<std::string> list;
 	
-	const unsigned int nWords = 20;
+	const unsigned int nWords = 50;
 
 
 	std::string str;
 	while(file >> str) 
 	{
 		std::transform(str.begin(), str.end(), str.begin(), ::tolower);
-		freq[str]++;
+		
+		std::string filtered;
+		for(const auto & c : str) if(isalnum(c)) filtered += c;
+		if(!filtered.empty()) freq[filtered]++;
 	}
 
 	for(int i = 0; i < nWords; i++)
