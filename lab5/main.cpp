@@ -4,6 +4,7 @@
 #include <vector>
 #include <map>
 #include <string>
+#include <chrono>
 
 int main()
 {
@@ -12,7 +13,6 @@ int main()
 	std::vector<std::string> list;
 	
 	const unsigned int nWords = 50;
-
 
 	std::string str;
 	while(file >> str) 
@@ -37,10 +37,8 @@ int main()
 		list.push_back(s->first);
 	}
 
-
 	std::cout << "De " << nWords << " mest förekommande orden är:" << std::endl;
 	for(const auto & s : list) std::cout << s << std::endl;
-
 
 	return 0;
 }
