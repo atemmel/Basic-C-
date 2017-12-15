@@ -20,6 +20,7 @@ int main(int argc, char* argv[])
 	std::string input;
 	while(getline(std::cin, input))
 	{
+		input = toLower(input);
 		if(input == "exit") 		return 0;
 		if(input == "add") 		addContact(fileName);
 		else if(input == "search") 	searchContact(fileName);
@@ -73,7 +74,7 @@ void searchContact(const char * fileName)
 	std::string input;
 	std::cout << "Write searchterm: " << std::endl;
 	filteredInput(input);
-	
+
 	std::ifstream file(fileName);
 		
 	Contact contact;
@@ -86,7 +87,25 @@ void searchContact(const char * fileName)
 
 void removeContact(const char * fileName)
 {
-	std::cout << "Remove a contact" << std::endl;
+	std::string searchterm;
+	std::cout << "Write searchterm for who you wish to delete: " << std::endl;
+	filteredInput(searchterm);
+
+	std::ifstream file(fileName);
+
+	Contact contact;
+	while(file >> contact)
+	{
+		if(contact.contains(searchterm)) 
+		{
+			std::cout << "Match: " << contact << std::endl;
+			std::cout << "Delete this person? (y/n): " << std::endl;
+
+			std::string input;
+			while(input != "y" && input != "n") filteredInput(input);
+		}
+		
+	}
 }
 
 void help()
@@ -95,5 +114,6 @@ void help()
 	std::cout << "search | Search for an already existing person." 	<< std::endl;
 	std::cout << "remove | Remove an already existing person."	<< std::endl;
 	std::cout << "help   | Display this help text."			<< std::endl;
+	std::cout << "exit   | Exit the program."			<< std::endl;
 }
 
