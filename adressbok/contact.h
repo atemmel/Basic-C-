@@ -11,9 +11,6 @@ struct Contact {
 	std::string phoneNr;
 	std::string date;
 	std::string misc;
-
-protected:
-	const char delimeter = '/';
 };
 
 

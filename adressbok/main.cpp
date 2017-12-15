@@ -1,6 +1,7 @@
 #include "contact.h"
-#include <iostream>
 #include <fstream>
+
+void filteredInput(std::string & input);
 
 void addContact(const char * fileName);
 
@@ -13,38 +14,55 @@ void help();
 int main(int argc, char* argv[])
 {
 	const char * fileName = ".contacts";
+	
+	std::cout << "Welcome to the address book! For help type 'help'." << std::endl; 
 
 	std::string input;
-	while(std::cin >> input)
+	while(getline(std::cin, input))
 	{
 		if(input == "exit") 		return 0;
 		if(input == "add") 		addContact(fileName);
 		else if(input == "search") 	searchContact(fileName);
 		else if(input == "remove") 	removeContact(fileName);
 		else if(input == "help") 	help();
+		else std::cout << "Unrecognized command, for help type 'help'." << std::endl;
 	}
 
 	return 0;
+}
+
+void filteredInput(std::string & input)
+{
+	bool valid = 0, failed = 0;
+	while(!valid)
+	{
+		if(failed) std::cout << "Please refrain from using symbols." << std::endl;
+		std::getline(std::cin, input);
+		std::string tmp;
+		for(const auto & c : input) if(c != '/') tmp += c;
+		valid = tmp == input;
+		failed = 1;
+	}
+	
+	
 }
 
 void addContact(const char * fileName)
 {
 	Contact input;
 
-	std::cin.ignore();
 	std::cout << "Write full name: ";
-	std::getline(std::cin, input.name);
+	filteredInput(input.name);
 	std::cout << "Write Adress: ";
-	std::getline(std::cin, input.adress);
+	filteredInput(input.adress);
 	std::cout << "Write Email: ";
-	std::cin >> input.email;
+	filteredInput(input.email);
 	std::cout << "Write Phone Number: ";
-	std::cin >> input.phoneNr;
+	filteredInput(input.phoneNr);
 	std::cout << "Write Date of Birth (YYYYMMDD): ";
-	std::cin >> input.date;
+	filteredInput(input.date);
 	std::cout << "Write Miscellaneous info: ";
-	std::cin.ignore();
-	std::getline(std::cin, input.misc);
+	filteredInput(input.misc);
 
 	std::ofstream output(fileName, std::ios::app);
 	output << input;
@@ -54,7 +72,7 @@ void searchContact(const char * fileName)
 {
 	std::string input;
 	std::cout << "Write searchterm: " << std::endl;
-	std::cin >> input;
+	filteredInput(input);
 	
 	std::ifstream file(fileName);
 		
@@ -64,7 +82,6 @@ void searchContact(const char * fileName)
 		if(contact.contains(input)) std::cout << "Match: " << contact << std::endl;
 	}
 
-	std::cin.clear();
 }
 
 void removeContact(const char * fileName)
@@ -74,6 +91,9 @@ void removeContact(const char * fileName)
 
 void help()
 {
-	std::cout << "Display help here" << std::endl;
+	std::cout << "add    | Add a person to the address book."	<< std::endl;
+	std::cout << "search | Search for an already existing person." 	<< std::endl;
+	std::cout << "remove | Remove an already existing person."	<< std::endl;
+	std::cout << "help   | Display this help text."			<< std::endl;
 }
 
