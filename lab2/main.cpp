@@ -34,6 +34,7 @@ int main()
 		float med = static_cast<float>(sum) / static_cast<float>(values.size());	//Casta allt till floats och beräkna medelvärdet
 
 		//Skriv ut samtliga resultat
+		std::cout << "Antalet värden: " << values.size() << std::endl;
 		std::cout << "Medelvärde: " << med << std::endl;
 		std::cout << "Max: " << max << std::endl;
 		std::cout << "Min: " << min << std::endl;
