@@ -30,7 +30,8 @@ std::ostream & operator<<(std::ostream & os, const Contact & con)
 {
 	const char d = '/';
 	os << con.name  << d << con.adress << d 
-		<< con.email << d << con.phoneNr << d << con.date << d << con.misc << d;
+		<< con.email << d << con.phoneNr << d << con.date 
+		<< d << con.misc << d << '\n';
 
 	return os;
 }

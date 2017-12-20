@@ -13,6 +13,12 @@ const auto seed = std::random_device()();
 typedef std::array<unsigned, codeLength> Code;
 typedef std::pair<unsigned, unsigned> Result;
 
+unsigned getRandom(const unsigned & max)
+{
+	static std::mt19937 mt(seed);	
+	std::uniform_int_distribution<int> dist(0, max);
+	return dist(mt);
+}
 
 std::vector<Code> getAllSolutions()
 {
@@ -62,12 +68,8 @@ Result getResult(const Code & guess, const Code & answer)
 
 Code generateCode(const std::map<Code,Result> & guesses)
 { 
-	static std::mt19937 mt(seed);
-	std::uniform_int_distribution<int> dist(0, 9);
-
 	static auto solutions = getAllSolutions();
 	Code guess;
-	bool uniqueFlag = false;
 
 	do
 	{
@@ -83,7 +85,7 @@ Code generateCode(const std::map<Code,Result> & guesses)
 				bad.push_back(g.first);
 		}
 		
-		std::remove_if(solutions.begin(), solutions.end(), [&](Code & c)
+		/*		std::remove_if(solutions.begin(), solutions.end(), [&](Code & c)
 		{
 			for(const auto & b : bad)
 			{
@@ -93,21 +95,57 @@ Code generateCode(const std::map<Code,Result> & guesses)
 							return true;
 			}
 			return false;
-		});
+		});*/
 
-		for(auto & i : guess) i = dist(mt);
+		if(guesses.empty()) 	guess = {1,2,3,4};
+		else if(std::find(solutions.begin(), solutions.end(), Code{5,6,7,8}) != solutions.end()) 	guess = {5,6,7,8};
+		else if(std::find(solutions.begin(), solutions.end(), Code{1,2,7,8}) != solutions.end())	guess = {1,2,7,8};
+		else guess = solutions[getRandom(solutions.size())];
 
-		while(!uniqueFlag)
+//		int s = solutions.size();
+		for(int i = 0; i < bad.size(); i++)
 		{
-
-			for(auto & i : guess)
-				if(std::find(guess.begin(), guess.end(), i) != guess.end())
-					i = dist(mt);
-
-			uniqueFlag = validGuess(guess, guesses, solutions);
+			for(int j = 0; j < solutions.size(); j++)
+			{
+				auto r = getResult(solutions[j],bad[i]);
+				if(r.second > 0 || r.first > 0)
+					solutions.erase(solutions.begin() + j);
+			}
 		}
+		for(auto & g : guesses)
+		{
+			for(int j = 0; j < solutions.size(); j++)
+			{
+				if(solutions[j] == g.first)
+					solutions.erase(solutions.begin() + j);
+			}
+		}
+		for(auto & c : cows)
+		//	if(guesses[c].second + guesses[c].first == 4)
+			for(auto & g : guesses)
+				if(g.first == c)
+					if(g.second.first + g.second.second == 4)
+					{
+						//first e bull
+						//second e cows
+					//	std::cout << "he e fyra " << std::endl;	
+						for(int j = 0; j < solutions.size(); j++)
+						{
+							auto r = getResult(solutions[j],c);
+							if(r.second + r.first != 4)
+								solutions.erase(solutions.begin() + j);
+						}
+					}
+
+
+			//if(s > solutions.size())
+			//std::cout << "Solutions decreased by: " << s - solutions.size() << std::endl;
+
+	
 	}
-	while(guesses.find(guess) != guesses.end());
+	while(!validGuess(guess, guesses, solutions));
+
+	//std::cout << "solutions: " << solutions.size() << std::endl;
 
 	return guess;
 }
@@ -122,7 +160,8 @@ int main()
 	std::cout << "Mata in rätt svar: ";
 	for(auto & i : correctAnswer) std::cin >> i;
 #else
-	correctAnswer = generateCode(guesses);
+	auto solutions = getAllSolutions();
+	correctAnswer = solutions[getRandom(solutions.size())];
 #endif
 
 	while(currentAnswer != correctAnswer)
@@ -140,6 +179,7 @@ int main()
 		std::cout << "Bulls: " << result.first << " Cows: " << result.second << '\n';
 #endif	
 
+		//std::cin.get();
 		guesses[currentAnswer] = result;
 		++n_guesses;
 	}
