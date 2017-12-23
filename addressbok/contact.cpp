@@ -17,15 +17,12 @@ std::string toLower(const std::string & str)
 bool Contact::contains(const std::string & term) const
 {
 	auto comp = toLower(term);
-	if(toLower(name).find(comp) 		!= -1 ||
+	return  toLower(name).find(comp) 		!= -1 ||
 		toLower(adress).find(comp) 	!= -1 ||
 		toLower(email).find(comp) 	!= -1 ||
 		toLower(phoneNr).find(comp) 	!= -1 ||
 		toLower(date).find(comp) 	!= -1 ||
-		toLower(misc).find(comp) 	!= -1)
-		return 1;
-
-	return 0;
+		toLower(misc).find(comp) 	!= -1;
 }
 
 std::ostream & operator<<(std::ostream & os, const Contact & con)
