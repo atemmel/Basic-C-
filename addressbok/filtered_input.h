@@ -4,6 +4,8 @@
 #include <iostream>
 #include <string>
 
+bool isValidEmail(const std::string & emailStr);
+
 enum Filter {ALPHA, NUMERIC, ALPHANUMERIC, MAIL, DATE, BOOLEAN};
 
 void filteredInput(std::string & input, const Filter & filter);

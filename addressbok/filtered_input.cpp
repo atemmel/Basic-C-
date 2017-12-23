@@ -1,5 +1,16 @@
 #include "filtered_input.h"
 
+bool isValidEmail(const std::string & str)
+{
+	return 		   str.find('@') != std::string::npos
+			&& str.find('.') != std::string::npos
+			&& str.find('@') == str.find_last_of('@')
+			&& str.find('.') == str.find_last_of('.')
+			&& str.find('@') + 1 < str.find('.')
+			&& str.find('.') + 1 != str.size()
+			&& str.front() != '@';
+}
+
 void filteredInput(std::string & input, const Filter & filter)
 {
 	bool valid = 0, failed = 0;
@@ -64,6 +75,11 @@ void filteredInput(std::string & input, const Filter & filter)
 					tmp = input = "y";
 				else if(input == "N" || input == "n")
 					tmp = input = "n";
+				break;
+
+			case MAIL:
+				if(isValidEmail(input))
+					tmp = input;
 				break;
 
 			default:
