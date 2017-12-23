@@ -17,6 +17,7 @@ struct Contact {
 	std::string misc;
 
 	const static char ostreamDelimeter;
+	const static unsigned nMembers;
 };
 
 

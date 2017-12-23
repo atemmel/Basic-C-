@@ -50,7 +50,7 @@ void searchContact(const char * fileName)
                 //Om kontakten innehåller invärdet, så är det en träff
                 if(contact.contains(input))
                 {
-                        std::cout << "Match: " << contact << std::endl;
+                        std::cout << "Match: " << contact;
                         ++nMatches;
                 }
         }
