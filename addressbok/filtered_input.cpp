@@ -5,9 +5,8 @@ bool isValidEmail(const std::string & str)
 	return 		   str.find('@') != std::string::npos
 			&& str.find('.') != std::string::npos
 			&& str.find('@') == str.find_last_of('@')
-			&& str.find('.') == str.find_last_of('.')
 			&& str.find('@') + 1 < str.find('.')
-			&& str.find('.') + 1 != str.size()
+			&& str.back() != '.'
 			&& str.front() != '@';
 }
 
