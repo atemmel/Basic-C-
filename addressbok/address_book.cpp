@@ -4,7 +4,7 @@ void addContact(const char * fileName)
 {
         Contact input;
         
-        //Mata in stegvis till en kontakt
+        //Mata in stegvis till en kontakt, med respektive filter
         std::cout << "Enter Full name: ";
         filteredInput(input.name, Filter::ALPHA);
         std::cout << "Enter Adress: ";
@@ -33,14 +33,10 @@ void searchContact(const char * fileName)
 
         std::ifstream file(fileName);
 
-        if(!file.is_open())
+        if(!file.is_open()) //Om filen inte går att öppna, förklara då detta
         {
-                std::cout << "File could not be opened. Try again." << std::endl;
-                return;
-        }
-        else if(file.eof())
-        {
-                std::cout << "File was empty. Try adding some contacts first!" << std::endl;
+                std::cout << "The file could not be opened. It might be empty, or open elsewhere" << std::endl;
+		return;
         }
 
         Contact contact;
@@ -78,12 +74,12 @@ void removeContact(const char * fileName)
                         std::cout << "Match: " << contact << std::endl;
                         std::cout << "Delete this person? (y/n): " << std::endl;
 
-                        //Hämta inmatningar tills någon utav dem är 'y' eller 'n'
                         std::string input;
                         filteredInput(input, Filter::BOOLEAN);
 
                         //Om användaren inte vill ta bort kontakten, spara den i listan
                         if(input == "n") contacts.push_back(contact);
+			//Öka annars antalet borttagningar
                         else ++nRemovals;
                 }
                 else contacts.push_back(contact);
