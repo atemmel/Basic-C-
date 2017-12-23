@@ -8,7 +8,7 @@ void addContact(const char * fileName)
         std::cout << "Enter Full name: ";
         filteredInput(input.name, Filter::ALPHA);
         std::cout << "Enter Adress: ";
-        filteredInput(input.adress, Filter::ALPHANUMERIC);
+        filteredInput(input.address, Filter::ALPHANUMERIC);
         std::cout << "Enter Email: ";
         filteredInput(input.email, Filter::MAIL);
         std::cout << "Enter Phone Number: ";

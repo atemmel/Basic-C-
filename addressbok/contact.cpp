@@ -21,7 +21,7 @@ bool Contact::contains(const std::string & term) const
 
 	//Om strängen går att återfinna någonstans i kontakten, returnera true
 	return  toLower(name).find(comp) 	!= -1 ||
-		toLower(adress).find(comp) 	!= -1 ||
+		toLower(address).find(comp) 	!= -1 ||
 		toLower(email).find(comp) 	!= -1 ||
 		toLower(phoneNr).find(comp) 	!= -1 ||
 		toLower(date).find(comp) 	!= -1 ||
@@ -32,7 +32,7 @@ std::ostream & operator<<(std::ostream & os, const Contact & con)
 {
 	const char d = Contact::ostreamDelimeter;
 
-	os << con.name  << d << con.adress << d 
+	os << con.name  << d << con.address << d 
 		<< con.email << d << con.phoneNr << d 
 		<< con.date  << d << con.misc    << d 
 		<< '\n';
@@ -61,7 +61,7 @@ std::istream & operator>>(std::istream & is, Contact & con)
 
 	//Tilldela kontaktens egenskaper med dess motsvarande slot i arrayen
 	con.name 	= array[0];
-	con.adress 	= array[1];
+	con.address 	= array[1];
 	con.email 	= array[2];
 	con.phoneNr 	= array[3];
 	con.date 	= array[4];
