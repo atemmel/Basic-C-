@@ -40,9 +40,7 @@ std::istream & operator>>(std::istream & is, Contact & con)
 {
 	const char d = Contact::ostreamDelimeter;
 
-	while(is.peek() == '\n') is.ignore();
-	if(is.eof()) return is;
-
+	
 	std::string full;
 	std::getline(is, full);
 	std::string array[Contact::nMembers];
@@ -64,6 +62,8 @@ std::istream & operator>>(std::istream & is, Contact & con)
 	con.phoneNr = array[3];
 	con.date = array[4];
 	con.misc = array[5];
+
+	while(is.peek() == '\n') is.ignore();
 
 	return is;
 }
