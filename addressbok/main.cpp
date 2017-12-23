@@ -12,12 +12,13 @@ int main(int argc, char* argv[])
 	std::string input;
 	while(getline(std::cin, input))
 	{
-		input = toLower(input);	//Omvandla strängen till små bokstäver
-		if(input == "exit") 		return 0;		//Avsluta
-		if(input == "add") 		addContact(fileName);	//Lägg till kontakt
-		else if(input == "search") 	searchContact(fileName);//Sök efter kontakt
-		else if(input == "remove") 	removeContact(fileName);//Radera kontakt
-		else if(input == "help") 	help();			//Visa hjälptext
+		input = toLower(input);		//Omvandla strängen till gemener
+
+		if(input == "exit") 		return 0;			//Avsluta
+		if(input == "add") 		addContact(fileName);		//Lägg till kontakt
+		else if(input == "search") 	searchContact(fileName);	//Sök efter kontakt
+		else if(input == "remove") 	removeContact(fileName);	//Radera kontakt
+		else if(input == "help") 	help();				//Visa hjälptext
 		else std::cout << "Unrecognized command, for help type 'help'." << std::endl;
 	}
 

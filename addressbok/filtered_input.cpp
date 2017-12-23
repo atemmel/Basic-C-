@@ -2,12 +2,12 @@
 
 bool isValidEmail(const std::string & str)
 {
-	return 		   str.find('@') != std::string::npos
-			&& str.find('.') != std::string::npos
-			&& str.find('@') == str.find_last_of('@')
-			&& str.find('@') + 1 < str.find('.')
-			&& str.back() != '.'
-			&& str.front() != '@';
+	return 		   str.find('@') != std::string::npos //Kolla om @ finns
+			&& str.find('.') != std::string::npos //Kolla om . finns
+			&& str.find('@') == str.find_last_of('@') //Kolla om bara ett @ finns
+			&& str.find('@') + 1 < str.find('.') //Kolla om @ finns före .
+			&& str.back() != '.' //Kolla om . inte är det sista elementet
+			&& str.front() != '@'; //Kolla om @ inte är det första elementet
 }
 
 void filteredInput(std::string & input, const Filter & filter)
@@ -15,7 +15,7 @@ void filteredInput(std::string & input, const Filter & filter)
 	bool valid = 0, failed = 0;
 	std::string error;
 
-	switch(filter)
+	switch(filter)	//Gå igenom vilket filter som ska användas och bygg upp strängen därefter
 	{
 		case ALPHA:
 			error = "Input can only contain characters A-Z, a-z or '-'";
@@ -38,7 +38,7 @@ void filteredInput(std::string & input, const Filter & filter)
 		
 	}
 
-	while(!valid)
+	while(!valid) //Så länge den senaste inmatningen inte ansågs godtycklig
 	{
 		//Visa felmeddelande om användaren misslyckats med en korrekt inmatning en gång
 		if(failed) std::cout << error << std::endl;
@@ -48,41 +48,38 @@ void filteredInput(std::string & input, const Filter & filter)
 
 		switch(filter)
 		{
-			case ALPHA:
-				for(const auto & c : input) if((!ispunct(c) && !isdigit(c)) || c == '-')
+			case ALPHA: //Släpp bara igenom bokstäver och -
+				for(const auto & c : input) if((!ispunct(c) && !isdigit(c) && !isspace(c)) || c == '-')
 					tmp += c;
 				break;
 			
-			case NUMERIC:
+			case NUMERIC: //Släpp bara igenom siffror
 				for(const auto & c : input) if(isdigit(c))
 					tmp += c;
 				break;
 			
-			case ALPHANUMERIC:
+			case ALPHANUMERIC: //Släpp bara igenom siffror, bokstäver, och ett fåtal tecken
 				for(const auto & c : input) if(!ispunct(c) || c == '.' || c == ',' || c == '-' || c == ' ') 
 					tmp += c;
 				break;
 
-			case DATE:
+			case DATE: //Släpp bara igenom giltiga datum
 				if(input.size() == 8)
 					for(const auto & c : input) if(isdigit(c))
 						tmp += c;
 				break;
 
-			case BOOLEAN:
+			case BOOLEAN: //Släpp bara igenom yes eller no
 				if(input == "Y" || input == "y")
 					tmp = input = "y";
 				else if(input == "N" || input == "n")
 					tmp = input = "n";
 				break;
 
-			case MAIL:
+			case MAIL: //Släpp bara igenom giltiga epostadresser
 				if(isValidEmail(input))
 					tmp = input;
 				break;
-
-			default:
-				for(const auto & c : input) if(c != '/') tmp += c;
 		}
 
 		valid = tmp == input; 	//Valid tilldelas likheten mellan tmp och inmatningen
