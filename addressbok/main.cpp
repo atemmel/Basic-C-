@@ -1,7 +1,15 @@
+/*
+Adam Temmel
+2018-01-11
+Introduktion till programmering i C++
+Examinerande lab: Adressbok
+*/
+
+
 #include "address_book.h"
 
 //Visar hjälptext
-void help();
+inline void help();
 
 int main(int argc, char* argv[])
 {

@@ -1,3 +1,10 @@
+/*
+Adam Temmel
+2018-01-11
+Introduktion till programmering i C++
+Examinerande lab: Adressbok
+*/
+
 #include "contact.h"
 
 const char Contact::ostreamDelimeter 	= '|';

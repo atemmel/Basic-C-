@@ -1,3 +1,10 @@
+/*
+Adam Temmel
+2018-01-11
+Introduktion till programmering i C++
+Examinerande lab: Adressbok
+*/
+
 #include "filtered_input.h"
 
 bool isValidEmail(const std::string & str)
