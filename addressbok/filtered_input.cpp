@@ -56,7 +56,7 @@ void filteredInput(std::string & input, const Filter & filter)
 		switch(filter)
 		{
 			case ALPHA: //Släpp bara igenom bokstäver och -
-				for(const auto & c : input) if((!ispunct(c) && !isdigit(c) && !isspace(c)) || c == '-')
+				for(const auto & c : input) if((!ispunct(c) && !isdigit(c) && !isspace(c))  || c == '-' || c == ' ')
 					tmp += c;
 				break;
 			
@@ -90,6 +90,7 @@ void filteredInput(std::string & input, const Filter & filter)
 		}
 
 		valid = tmp == input; 	//Valid tilldelas likheten mellan tmp och inmatningen
+		if(input.empty()) valid = false;	//Om inmatningen var tom, ignorera
 		failed = 1; 		//Börja mata ut hjälptext
 	}
 }
